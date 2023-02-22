@@ -79,7 +79,6 @@ public class RegistrationService {
         confirmTokenService.setConfirmedAt(token);
         userService.enableUsers(confirmToken.get().getUser().getEmail());
 
-        //Returning confirmation message if the token matches
         return "Your email is confirmed. Thank you for using our service!";
     }
 }

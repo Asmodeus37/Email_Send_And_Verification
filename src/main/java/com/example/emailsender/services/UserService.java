@@ -43,30 +43,17 @@ public class UserService implements UserDetailsService {
 
             if (!isEnabled) {
                 String token = UUID.randomUUID().toString();
-
-                //A method to save user and token in this class
                 saveConfirmationToken(userPrevious, token);
-
                 return token;
-
             }
             throw new IllegalStateException(String.format("User with email %s already exists!", user.getEmail()));
         }
 
         String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encodedPassword);
-
-        //Saving the user after encoding the password
         userRepository.save(user);
-
-        //Creating a token from UUID
         String token = UUID.randomUUID().toString();
-
-        //Getting the confirmation token and then saving it
         saveConfirmationToken(user, token);
-
-
-        //Returning token
         return token;
     }
 
